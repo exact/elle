@@ -27,6 +27,38 @@ Inspired by [Elixir](https://github.com/elixir-lang/elixir) & [Gleam](https://gi
 - 🛡️ **Secure** - Built from the ground up for cryptographic security
 - 🚀 **Performance** - Zero-overhead model to abstractions
 
+## 📝 Example
+
+```go
+package main
+
+import (
+    "sync"
+
+    "github.com/exact/elle/io"
+    "github.com/exact/elle/secure"
+)
+
+func main() {
+    var wg sync.WaitGroup
+
+    // Make a pool of 25 goroutines
+	pool := io.Pool(25)
+
+    // Simulate random, concurrent work
+	for range secure.Number(50, 150) {
+		pool.Add(&wg, func() {
+			io.Puts("working...")
+			io.Sleep(secure.Number(1000, 2500))
+			io.Puts("worked:", secure.NewUserAgent())
+		})
+	}
+
+    // Wait for work to finish
+    wg.Wait()
+}
+```
+
 ## 🤝 Contributing
 
 We love your input! We want to make contributing to {project_name} as easy and transparent as possible. Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
