@@ -1,1 +1,2 @@
-# elle
+# Elegant Low-Level Elements
+Elle (Elegant Low-Level Elements) is a lightweight Go library designed to simplify common programming tasks. It provides a set of utilities and building blocks that make Go development faster and more efficient, especially for low-level operations. Elle covers a range of use cases, such as easier handling of errors, better logging, streamlined concurrency management, and other everyday tasks that typically involve boilerplate code. By abstracting away repetitive tasks, Elle lets developers focus on writing cleaner, more maintainable code without sacrificing control over the low-level details.
