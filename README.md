@@ -21,6 +21,8 @@ It provides a set of utilities and building blocks that make Go development fast
 
 Inspired by [Elixir](https://github.com/elixir-lang/elixir) & [Gleam](https://github.com/gleam-lang/gleam) ⭐️
 
+**Note: This project is intended for personal use cases, if anyone finds it useful I'm happy but this serves mostly for peer review and improvement.**
+
 ## ✨ Features
 
 - 🧼 **Simple** - Stupidly simple syntax that makes coding fun
@@ -33,19 +35,27 @@ Inspired by [Elixir](https://github.com/elixir-lang/elixir) & [Gleam](https://gi
 package main
 
 import (
-    "sync"
+	"sync"
 
-    "github.com/exact/elle/io"
-    "github.com/exact/elle/secure"
+	"github.com/exact/elle/io"
+	"github.com/exact/elle/secure"
 )
 
 func main() {
-    var wg sync.WaitGroup
+	var wg sync.WaitGroup
 
-    // Make a pool of 25 goroutines
+	// Make a pool of 25 goroutines
 	pool := io.Pool(25)
 
-    // Simulate random, concurrent work
+	// Do some work out of pool
+	io.Async(func() {
+		for range 5 {
+			io.Sleep(secure.Number(100, 500))
+			io.Puts("bg completed!")
+		}
+	})
+
+	// Simulate random, concurrent work
 	for range secure.Number(50, 150) {
 		pool.Add(&wg, func() {
 			io.Puts("working...")
@@ -54,18 +64,10 @@ func main() {
 		})
 	}
 
-    // Wait for work to finish
-    wg.Wait()
+	// Wait for work to finish
+	wg.Wait()
 }
 ```
-
-## 🤝 Contributing
-
-We love your input! We want to make contributing to {project_name} as easy and transparent as possible. Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 

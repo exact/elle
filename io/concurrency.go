@@ -34,6 +34,10 @@ func (s sema) Add(wg *sync.WaitGroup, f func()) {
 	}(wg)
 }
 
+func Async(f func()) {
+	go f()
+}
+
 func Sleep(n int) {
 	time.Sleep(time.Duration(n) * time.Millisecond)
 }

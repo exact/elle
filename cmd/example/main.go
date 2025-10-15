@@ -8,20 +8,28 @@ import (
 )
 
 func main() {
-	io.Puts(io.Get("https://api-cloudfront.life360.com", nil, true))
-}
-
-func main2() {
 	var wg sync.WaitGroup
+
+	// Make a pool of 25 goroutines
 	pool := io.Pool(25)
 
-	for range secure.Number(1000, 2500) {
+	// Do some work out of pool
+	io.Async(func() {
+		for range 5 {
+			io.Sleep(secure.Number(100, 500))
+			io.Puts("bg completed!")
+		}
+	})
+
+	// Simulate random, concurrent work
+	for range secure.Number(50, 150) {
 		pool.Add(&wg, func() {
-			//io.Puts("starting...")
-			//io.Sleep(1000)
-			io.Puts("new:", secure.NewUserAgent())
+			io.Puts("working...")
+			io.Sleep(secure.Number(1000, 2500))
+			io.Puts("worked:", secure.NewUserAgent())
 		})
 	}
 
+	// Wait for work to finish
 	wg.Wait()
 }
