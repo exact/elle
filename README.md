@@ -15,43 +15,21 @@
 
 ## 🧐 What is this?
 
-Elle (Elegant Low-Level Elements) is a lightweight Go library designed to simplify common programming tasks.
+Elle (Elegant Low-Level Elements) is a lightweight Go library designed to simplify coding.
 
 It provides a set of utilities and building blocks that make Go development faster and more efficient, especially for complex operations.
 
+Inspired by [Elixir](https://github.com/elixir-lang/elixir) & [Gleam](https://github.com/gleam-lang/gleam) ⭐️
+
 ## ✨ Features
 
-- 🛡️ **Simple** - Stupidly simple syntax that makes coding fun
+- 🧼 **Simple** - Stupidly simple syntax that makes coding fun
 - 🛡️ **Secure** - Built from the ground up for cryptographic security
 - 🚀 **Performance** - Zero-overhead model to abstractions
-
-## 📚 Documentation
-
-- [Installation Guide](docs/installation.md)
-- [User Guide](docs/user-guide.md)
-- [API Reference](docs/api.md)
-- [Contributing Guidelines](CONTRIBUTING.md)
-- [FAQ](docs/faq.md)
 
 ## 🤝 Contributing
 
 We love your input! We want to make contributing to {project_name} as easy and transparent as possible. Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-## 📊 Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-- [x] ~~Completed Feature~~
-
-See the [open issues](https://github.com/exact/elle/issues) for a full list of proposed features and known issues.
-
-## 🏆 Contributors
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## 📄 License
 
