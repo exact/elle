@@ -3,7 +3,6 @@ package secure
 import (
 	"crypto/rand"
 	"encoding/hex"
-	"fmt"
 	"math/big"
 )
 
@@ -15,15 +14,7 @@ func Hex(n int) string {
 }
 
 // Number returns a cryptographically secure random number between min and max.
-func Number(min, max int64) (int64, error) {
-	if min > max {
-		return 0, fmt.Errorf("invalid range: min(%d) > max (%d)", min, max)
-	}
-
-	num, err := rand.Int(rand.Reader, big.NewInt(max-min+1))
-	if err != nil {
-		return 0, err
-	}
-
-	return num.Int64() + min, nil
+func Number(min int64, max int) int {
+	num, _ := rand.Int(rand.Reader, big.NewInt(int64(max)-min+1))
+	return int(num.Int64() + min)
 }
