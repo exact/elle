@@ -1,35 +1,33 @@
 package main
 
 import (
-	"sync"
-
 	"github.com/exact/elle/io"
-	"github.com/exact/elle/secure"
 )
 
 func main() {
-	var wg sync.WaitGroup
+	p := io.SyncPool(1)
+	p.Go(func() {
+		panic("101010101010101011")
+	})
+	p.Wait()
+	io.Puts("still good!!")
+}
 
-	// Make a pool of 25 goroutines
+/*func main3() {
+	io.Puts(io.Get("https://api-cloudfront.life360.com", nil, true))
+}
+
+func main() {
+	var wg sync.WaitGroup
 	pool := io.Pool(25)
 
-	// Do some work out of pool
-	io.Async(func() {
-		for range 5 {
-			io.Sleep(secure.Number(100, 500))
-			io.Puts("bg completed!")
-		}
-	})
-
-	// Simulate random, concurrent work
-	for range secure.Number(50, 150) {
+	for range 100 {
 		pool.Add(&wg, func() {
-			io.Puts("working...")
-			io.Sleep(secure.Number(1000, 2500))
-			io.Puts("worked:", secure.NewUserAgent())
+			//io.Puts("starting...")
+			//io.Sleep(1000)
+			io.Puts("new:", secure.NewUserAgent())
 		})
 	}
 
-	// Wait for work to finish
 	wg.Wait()
-}
+}*/

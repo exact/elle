@@ -50,7 +50,7 @@ func main() {
 	// Do some work out of pool
 	io.Async(func() {
 		for range 5 {
-			io.Sleep(secure.Number(100, 500))
+			io.Sleep(500)
 			io.Puts("bg completed!")
 		}
 	})
