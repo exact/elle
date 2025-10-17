@@ -26,7 +26,7 @@ Inspired by [Elixir](https://github.com/elixir-lang/elixir) & [Gleam](https://gi
 ## ✨ Features
 
 - 🧼 **Simple** - Stupidly simple syntax that makes coding fun
-- 🚀 **Fast** - Zero-overhead model to abstractions & sugar
+- 🚀 **Fast** - Zero-overhead model to abstractions & any syntax sugar
 - 🛡️ **Secure** - Built from the ground up to be cryptographically secure
 
 ## 📝 Example
