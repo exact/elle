@@ -4,14 +4,14 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/exact/elle/secure"
+	"github.com/exact/elle/random"
 )
 
 func Get(target string, headers map[string]string, defaults bool) (string, error) {
 	req, _ := http.NewRequest("GET", target, nil)
 
 	if defaults {
-		for k, v := range secure.NewHeaders() {
+		for k, v := range random.NewHeaders() {
 			req.Header.Set(k, v)
 		}
 	}

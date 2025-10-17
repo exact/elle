@@ -1,33 +1,33 @@
 package main
 
 import (
+	"time"
+
 	"github.com/exact/elle/io"
+	"github.com/exact/elle/random"
 )
 
 func main() {
-	p := io.SyncPool(1)
+	// Make a pool of synced goroutines
+	p := io.SyncPool(20)
+
+	// Handle a misbehaving function automatically
 	p.Go(func() {
-		panic("101010101010101011")
+		time.Sleep(3 * time.Second)
+		panic("something went horribly wrong D:")
 	})
-	p.Wait()
-	io.Puts("still good!!")
-}
 
-/*func main3() {
-	io.Puts(io.Get("https://api-cloudfront.life360.com", nil, true))
-}
-
-func main() {
-	var wg sync.WaitGroup
-	pool := io.Pool(25)
-
-	for range 100 {
-		pool.Add(&wg, func() {
-			//io.Puts("starting...")
-			//io.Sleep(1000)
-			io.Puts("new:", secure.NewUserAgent())
+	// Simulate a random amount of concurrent work
+	for i := range random.Number(50, 150) {
+		p.Go(func() {
+			time.Sleep(500 * time.Millisecond)
+			io.Log(io.S("[go %d] done!", i))
 		})
 	}
 
-	wg.Wait()
-}*/
+	// Wait for all work to finish
+	p.Await()
+
+	// Finish while showing execution is fine
+	io.Log("goodbye!")
+}

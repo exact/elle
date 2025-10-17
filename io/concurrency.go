@@ -69,6 +69,6 @@ func (s sync_sema) Go(f func()) {
 }
 
 // Wait simply waits for the included sync.WaitGroup to complete.
-func (s sync_sema) Wait() {
+func (s sync_sema) Await() {
 	s.g.Wait()
 }

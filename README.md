@@ -35,37 +35,35 @@ Inspired by [Elixir](https://github.com/elixir-lang/elixir)'s syntax
 package main
 
 import (
-	"sync"
+	"time"
 
 	"github.com/exact/elle/io"
-	"github.com/exact/elle/secure"
+	"github.com/exact/elle/random"
 )
 
 func main() {
-	var wg sync.WaitGroup
+	// Make a pool of synced goroutines
+	p := io.SyncPool(20)
 
-	// Make a pool of 25 goroutines
-	pool := io.Pool(25)
-
-	// Do some work out of pool
-	io.Async(func() {
-		for range 5 {
-			io.Sleep(500)
-			io.Puts("bg completed!")
-		}
+	// Handle a misbehaving function automatically
+	p.Go(func() {
+		time.Sleep(3 * time.Second)
+		panic("something went horribly wrong D:")
 	})
 
-	// Simulate random, concurrent work
-	for range secure.Number(50, 150) {
-		pool.Add(&wg, func() {
-			io.Puts("working...")
-			io.Sleep(secure.Number(1000, 2500))
-			io.Puts("worked:", secure.NewUserAgent())
+	// Simulate a random amount of concurrent work
+	for i := range random.Number(50, 150) {
+		p.Go(func() {
+			time.Sleep(500 * time.Millisecond)
+			io.Log(io.S("[go %d] done!", i))
 		})
 	}
 
-	// Wait for work to finish
-	wg.Wait()
+	// Wait for all work to finish
+	p.Await()
+
+	// Finish while showing execution is fine
+	io.Log("goodbye!")
 }
 ```
 
