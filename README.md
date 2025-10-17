@@ -19,7 +19,7 @@ elle (Elegant Low-Level Elements) is a lightweight Go library designed to simpli
 
 It provides a set of utilities and building blocks that make Go development faster and more efficient, especially for complex operations.
 
-Inspired by [Elixir](https://github.com/elixir-lang/elixir) & [Gleam](https://github.com/gleam-lang/gleam) ⭐️
+Inspired by [Elixir](https://github.com/elixir-lang/elixir)'s syntax
 
 **Note: This project is intended for personal use cases, if anyone finds it useful I'm happy but this serves mostly for peer review and improvement.**
 
