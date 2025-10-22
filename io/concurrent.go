@@ -8,7 +8,7 @@ import (
 	"github.com/exact/elle/types"
 )
 
-type sema chan types.Nothing
+type sema chan types.None
 type sync_sema struct {
 	c sema
 	g *sync.WaitGroup
@@ -22,9 +22,9 @@ func recoverPanic() {
 }
 
 // Acuiring and releasing semaphore helpers
-func (s sema) acquire()      { s <- types.Nothing{} }
+func (s sema) acquire()      { s <- types.None{} }
 func (s sema) release()      { <-s }
-func (s sync_sema) acquire() { s.c <- types.Nothing{} }
+func (s sync_sema) acquire() { s.c <- types.None{} }
 func (s sync_sema) release() { <-s.c }
 
 // OpenPool acts as lightweight semaphore and is used to limit the amount of active goroutines actually doing work at once.

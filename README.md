@@ -39,31 +39,37 @@ import (
 
 	"github.com/exact/elle/io"
 	"github.com/exact/elle/random"
+	"github.com/exact/elle/types"
 )
 
-func main() {
-	// Make a pool of synced goroutines
-	p := io.SyncPool(20)
+// Create a global, synced pool that can be used anywhere
+var pool = io.SyncPool(30)
 
-	// Handle a misbehaving function automatically
-	p.Go(func() {
+func main() {
+	// A zero-size, empty struct is included for efficiency
+	test := make(chan types.None, 1)
+	test <- types.None{}
+
+	// Simulate a panicing function, it will recover automatically
+	pool.Go(func() {
 		time.Sleep(3 * time.Second)
-		panic("something went horribly wrong D:")
+		panic("something went horribly wrong!")
 	})
 
-	// Simulate a random amount of concurrent work
-	for i := range random.Number(50, 150) {
-		p.Go(func() {
-			time.Sleep(500 * time.Millisecond)
-			io.Log(io.S("[go %d] done!", i))
+	// Simulate a random amount of I/O work
+	for i := range random.Number(25, 50) {
+		pool.Go(func() {
+			resp, err := io.Request("GET", "https://example.com/", nil, nil, true)
+			if err != nil {
+				io.Log.Warn("Request Failed", "thread", i)
+			} else {
+				io.Log.Info("Request Done", "thread", i, "resp", resp)
+			}
 		})
 	}
 
 	// Wait for all work to finish
-	p.Await()
-
-	// Finish while showing execution is fine
-	io.Log("goodbye!")
+	pool.Wait()
 }
 ```
 
