@@ -12,6 +12,9 @@ import (
 var pool = io.SyncPool(30)
 
 func main() {
+	// Measure how long this function takes to execute
+	defer io.Timer("main")()
+
 	// A zero-size, empty struct is included for efficiency
 	test := make(chan types.None, 1)
 	test <- types.None{}

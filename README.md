@@ -24,7 +24,7 @@ It provides a set of utilities and methods that make Go development faster and m
 - 🧼 **Simple** - Very simple syntax that makes coding fun
 - 🚀 **Fast**   - Zero-overhead model to abstractions & any sugar in syntax
 - 🛡️ **Secure** - Built from the ground up to be cryptographically secure
-- 🛡️ **Robust** - Variety of use-cases and methods for all types of projects
+- ✨ **Robust** - Variety of use-cases and methods for all types of projects
 
 ## 📝 Example
 
