@@ -7,10 +7,9 @@ import (
 	"github.com/exact/elle/random"
 )
 
-func main() {
-	// Make a pool of synced goroutines
-	p := io.SyncPool(20)
+var p = io.SyncPool(30)
 
+func main() {
 	// Handle a misbehaving function automatically
 	p.Go(func() {
 		time.Sleep(3 * time.Second)
@@ -19,15 +18,21 @@ func main() {
 
 	// Simulate a random amount of concurrent work
 	for i := range random.Number(50, 150) {
-		p.Go(func() {
+		/*p.Go(func() {
 			time.Sleep(500 * time.Millisecond)
-			io.Log(io.S("[go %d] done!", i))
+			io.Print("done!", "thread", i)
+		})*/
+		p.Go(func() {
+			resp, err := io.Request("GET", "https://example.com/", nil, nil, true)
+			if err != nil {
+				io.Log.Warn("Request Failed", "thread", i)
+			} else {
+				io.Log.Info("Request Done", "thread", i, "resp", resp)
+			}
 		})
 	}
 
 	// Wait for all work to finish
-	p.Await()
-
-	// Finish while showing execution is fine
-	io.Log("goodbye!")
+	p.Wait()
+	io.Log.Info("goodbye!")
 }

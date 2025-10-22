@@ -1,14 +1,26 @@
 package io
 
 import (
+	"bytes"
+	"encoding/json"
 	"io"
 	"net/http"
 
 	"github.com/exact/elle/random"
 )
 
-func Get(target string, headers map[string]string, defaults bool) (string, error) {
-	req, _ := http.NewRequest("GET", target, nil)
+func Request(method, target string, headers, data map[string]string, defaults bool) (string, error) {
+	var req *http.Request
+	if data == nil {
+		req, _ = http.NewRequest(method, target, nil)
+	} else {
+		jsonData, err := json.Marshal(data)
+		if err != nil {
+			return "", err
+		}
+
+		req, _ = http.NewRequest(method, target, bytes.NewBuffer(jsonData))
+	}
 
 	if defaults {
 		for k, v := range random.NewHeaders() {

@@ -1,6 +1,7 @@
 package io
 
 import (
+	"fmt"
 	"runtime/debug"
 	"sync"
 
@@ -14,21 +15,21 @@ type sync_sema struct {
 }
 
 // Recover from any panics and output stack trace
-func savePanic() {
+func recoverPanic() {
 	if v := recover(); v != nil {
-		Warn(S("panic: %q\n%s", v, debug.Stack()))
+		Log.Error(fmt.Sprintf("panic: %q\n%s", v, debug.Stack()))
 	}
 }
 
 // Acuiring and releasing semaphore helpers
-func (s sema) lock()        { s <- types.Nothing{} }
-func (s sema) unlock()      { <-s }
-func (s sync_sema) lock()   { s.c <- types.Nothing{} }
-func (s sync_sema) unlock() { <-s.c }
+func (s sema) acquire()      { s <- types.Nothing{} }
+func (s sema) release()      { <-s }
+func (s sync_sema) acquire() { s.c <- types.Nothing{} }
+func (s sync_sema) release() { <-s.c }
 
-// Pool acts as lightweight semaphore and is used to limit the amount of active goroutines actually doing work at once.
-func Pool(n int) sema {
-	return make(chan types.Nothing, n)
+// OpenPool acts as lightweight semaphore and is used to limit the amount of active goroutines actually doing work at once.
+func OpenPool(n int) sema {
+	return make(sema, n)
 }
 
 // Go submits a function to be executed immediately.
@@ -36,9 +37,9 @@ func Pool(n int) sema {
 // It will wait for an available goroutine before actually doing work.
 func (s sema) Go(f func()) {
 	go func() {
-		s.lock()
-		defer s.unlock()
-		defer savePanic()
+		s.acquire()
+		defer s.release()
+		defer recoverPanic()
 		f()
 	}()
 }
@@ -46,10 +47,7 @@ func (s sema) Go(f func()) {
 // SyncPool acts as a lightweight semaphore, similarly to Pool, but includes a sync.WaitGroup which allows further coordination in work.
 func SyncPool(n int) sync_sema {
 	var wg sync.WaitGroup
-	return sync_sema{
-		c: make(chan types.Nothing, n),
-		g: &wg,
-	}
+	return sync_sema{c: make(sema, n), g: &wg}
 }
 
 // Go submits a function to be executed immediately.
@@ -60,15 +58,15 @@ func SyncPool(n int) sync_sema {
 func (s sync_sema) Go(f func()) {
 	s.g.Add(1)
 	go func() {
-		s.lock()
-		defer s.unlock()
+		s.acquire()
+		defer s.release()
 		defer s.g.Done()
-		defer savePanic()
+		defer recoverPanic()
 		f()
 	}()
 }
 
 // Wait simply waits for the included sync.WaitGroup to complete.
-func (s sync_sema) Await() {
+func (s sync_sema) Wait() {
 	s.g.Wait()
 }
