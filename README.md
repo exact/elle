@@ -72,6 +72,6 @@ func main() {
 ```
 
 <div align="center">
-  Made with 💜 by <a href="https://github.com/exact">@exact</a>
+  Made with 💜 by <a href="https://github.com/exact" style="text-decoration: none;">@exact</a>
 </div>
 
