@@ -19,8 +19,6 @@
 
 It provides a set of utilities and methods that make Go development faster and more efficient, especially for complex operations.
 
-**Note: This project is intended for personal use cases, if anyone finds it useful I'm happy but this serves mostly for peer review and improvement.**
-
 ## ✨ Features
 
 - 🧼 **Simple** - Very simple syntax that makes coding fun
