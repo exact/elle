@@ -15,17 +15,18 @@
 
 ## 🧐 What is this?
 
-`elle` (Elegant Low-Level Elements) is a lightweight Go library designed to simplify coding.
+`elle` (Elegant Low-Level Elements) is a lightweight Go library designed to simplify coding for me.
 
-It provides a set of utilities and building blocks that make Go development faster and more efficient, especially for complex operations.
+It provides a set of utilities and methods that make Go development faster and more efficient, especially for complex operations.
 
 **Note: This project is intended for personal use cases, if anyone finds it useful I'm happy but this serves mostly for peer review and improvement.**
 
 ## ✨ Features
 
-- 🧼 **Simple** - Stupidly simple syntax that makes coding fun
-- 🚀 **Fast** - Zero-overhead model to abstractions & any syntax sugar
+- 🧼 **Simple** - Very simple syntax that makes coding fun
+- 🚀 **Fast**   - Zero-overhead model to abstractions & any sugar in syntax
 - 🛡️ **Secure** - Built from the ground up to be cryptographically secure
+- 🛡️ **Robust** - Variety of use-cases and methods for all types of projects
 
 ## 📝 Example
 
@@ -72,6 +73,6 @@ func main() {
 ```
 
 <div align="center">
-  Made with 💜 by <a href="https://github.com/exact" style="text-decoration: none;">@exact</a>
+  Made with 💜 by <a href="https://github.com/exact">@exact</a>
 </div>
 
